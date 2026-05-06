@@ -1,0 +1,52 @@
+name: Build and deploy catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ct/**"
+      - "vm/**"
+      - "install/**"
+      - "site/**"
+      - "scripts/build-catalog.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate catalog JSON
+        run: python3 scripts/build-catalog.py
+
+      - name: Stage site
+        run: |
+          mkdir -p _site/json
+          cp -r site/* _site/
+          cp json/index.json _site/json/index.json
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

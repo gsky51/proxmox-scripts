@@ -1,0 +1,22 @@
+{
+  "scripts": [
+    {
+      "kind": "ct",
+      "slug": "hello-world",
+      "path": "ct/hello-world.sh",
+      "author": "gsky51",
+      "license": "MIT",
+      "source": "https://github.com/gsky51/proxmox-scripts",
+      "name": "Hello-World",
+      "var_tags": "demo",
+      "var_cpu": "1",
+      "var_ram": "256",
+      "var_disk": "2",
+      "var_os": "debian",
+      "var_version": "13",
+      "var_unprivileged": "1",
+      "has_installer": true,
+      "install_command": "bash -c \"$(curl -fsSL https://raw.githubusercontent.com/gsky51/proxmox-scripts/main/ct/hello-world.sh)\""
+    }
+  ]
+}

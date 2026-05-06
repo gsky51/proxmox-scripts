@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>proxmox-scripts</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+    h1 { margin: 0 0 .25rem; }
+    .subtitle { color: #888; font-size: .9rem; margin-bottom: 1.5rem; }
+    .subtitle a { color: inherit; }
+    .controls {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .controls input[type="search"] {
+      flex: 1;
+      min-width: 180px;
+      padding: .4rem .7rem;
+      font: inherit;
+      border: 1px solid #8886;
+      border-radius: 6px;
+      background: transparent;
+    }
+    .controls select {
+      padding: .4rem .7rem;
+      font: inherit;
+      border: 1px solid #8886;
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .count { font-size: .85rem; color: #888; }
+    .grid {
+      display: grid;
+      gap: .85rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .card {
+      border: 1px solid #8883;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: .3rem;
+    }
+    .card-name { font-size: 1.05rem; font-weight: 600; margin: 0; }
+    .kind-badge {
+      font-size: .7rem;
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      background: #8882;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .resources { font-size: .8rem; color: #888; margin-bottom: .4rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .65rem; }
+    .tag {
+      font-size: .72rem;
+      padding: .1rem .4rem;
+      border-radius: 4px;
+      background: #8882;
+    }
+    .links { font-size: .8rem; margin-bottom: .65rem; }
+    .links a { color: inherit; opacity: .75; }
+    .links a:hover { opacity: 1; }
+    .cmd-row { display: flex; gap: .4rem; align-items: stretch; }
+    .cmd-box {
+      flex: 1;
+      font-family: monospace;
+      font-size: .7rem;
+      padding: .35rem .5rem;
+      border: 1px solid #8884;
+      border-radius: 5px;
+      background: #8881;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .copy-btn {
+      font: inherit;
+      font-size: .75rem;
+      padding: .25rem .55rem;
+      border: 1px solid #8884;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      background: transparent;
+    }
+    .copy-btn:hover { background: #8881; }
+    .empty { color: #888; padding: 2rem 0; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>proxmox-scripts</h1>
+  <p class="subtitle">
+    Personal Proxmox helper scripts by <a href="https://github.com/gsky51">gsky51</a>.
+    Framework from <a href="https://github.com/community-scripts/ProxmoxVE">community-scripts/ProxmoxVE</a> (MIT).
+  </p>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search by name or tag…" autocomplete="off" aria-label="Search by name or tag" />
+    <select id="kind-filter" aria-label="Filter by script type">
+      <option value="">All types</option>
+      <option value="ct">LXC (ct)</option>
+      <option value="vm">VM</option>
+    </select>
+    <select id="os-filter" aria-label="Filter by OS"><option value="">All OS</option></select>
+    <span class="count" id="count"></span>
+  </div>
+  <div id="grid" class="grid"></div>
+  <script src="catalog.js"></script>
+</body>
+</html>

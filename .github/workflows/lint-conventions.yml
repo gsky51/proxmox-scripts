@@ -1,0 +1,38 @@
+name: Lint conventions
+
+on:
+  pull_request:
+    paths:
+      - "ct/**"
+      - "install/**"
+      - "vm/**"
+      - "misc/**"
+      - "scripts/lint-conventions.py"
+  push:
+    branches: [main]
+    paths:
+      - "ct/**"
+      - "install/**"
+      - "vm/**"
+      - "misc/**"
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check misc/ is populated
+        run: |
+          count=$(ls misc/*.func 2>/dev/null | wc -l)
+          if [[ "$count" -lt 1 ]]; then
+            echo "ERROR: misc/*.func is empty — run scripts/sync-from-upstream.sh first" >&2
+            exit 1
+          fi
+          echo "Found ${count} .func files in misc/"
+
+      - name: Run convention lint
+        run: python3 scripts/lint-conventions.py
